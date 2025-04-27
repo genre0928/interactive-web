@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/tv" element={<Tv />}></Route>
         <Route path="/search" element={<Search />}></Route>
+        <Route path="/movies/:movieId" element={<Home />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </>

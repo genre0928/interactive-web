@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { theme } from "./theme.ts";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -68,17 +69,25 @@ a {
   text-decoration:none;
   color:inherit;
 }
+/* 스크롤바 제거 */
+::-webkit-scrollbar {
+  display: none;
+}
 `;
+
+const client = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
+      <RecoilRoot>
+        <QueryClientProvider client={client}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     </BrowserRouter>
   </StrictMode>
 );

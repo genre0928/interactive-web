@@ -1,7 +1,7 @@
 const API_KEY =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkMWYxNzM2YjQ4YjA5Mzg2NTk2MTczYjMwYmMwYjNkMyIsIm5iZiI6MTc0NTU2MzAxMC44MzcsInN1YiI6IjY4MGIyZDgyNmFhMWY5MGM3ZGFhOGIyOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n989MY6zsUETfZDuARMwdsPbg8Bh9gyGGIyMvt-xX7g";
 
-interface IMovie {
+export interface IMovie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -29,8 +29,32 @@ export interface IGetMoviesResult {
   total_results: number;
 }
 
-export async function getMovies() {
-  const url = `api/movie/now_playing?language=ko-KR&page=1`;
+export interface IGetTvSerisResult {
+  page: number;
+  results: ITvSeries[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface ITvSeries {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: number;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export async function getMovies(series: string, type: string, page: number) {
+  const url = `/api/${series}/${type}?language=ko-KR&page=${page}`;
   const options = {
     method: "GET",
     headers: { accept: "application/json", Authorization: `Bearer ${API_KEY}` },
@@ -38,24 +62,35 @@ export async function getMovies() {
 
   try {
     const res = await fetch(url, options);
-    const json = res.json();
-    return json;
+    if (res.ok) {
+      const json = res.json();
+      return json;
+    }
   } catch (e) {
     console.error(e);
   }
 }
 
-export async function name(movieId: number) {
-  const url = `api/movie/${movieId}?language=ko-KR`;
+export async function searchResults(
+  series: string,
+  keyword: string,
+  page: number
+) {
+  const url = `api/search/${series}?query=${keyword}&include_adult=false&language=ko-KR&page=${page}`;
   const options = {
     method: "GET",
-    headers: { accept: "application/json", Authorization: `Bearer ${API_KEY}` },
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
   };
 
   try {
     const res = await fetch(url, options);
-    const json = res.json();
-    return json;
+    if (res.ok) {
+      const json = res.json();
+      return json;
+    }
   } catch (e) {
     console.error(e);
   }

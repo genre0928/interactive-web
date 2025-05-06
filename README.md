@@ -2,14 +2,14 @@
 
 사용한 도구
 언어 : react@18.3.1 + typescript@5.7.3
-(framer motion 지원 문제로 react 다운그레이드드)
-상태 관리 : recoil@0.7.7
+(framer motion 지원 문제로 react 다운그레이드)
 CSS 관리 : styled-components@6.1.17
 빌드 : vite@6.3.2
 경로 관리 : react-router-dom@7.5.1
 애니메이션 : framer-motion@12.8.0
 비동기 상태 관리 : react-query@3.39.3
 유효성 검사 : react-hook-form@7.56.1
+이메일 발송 라이브러리 : emailjs@4.0.3
 
 1. 초기 세팅
 
@@ -29,13 +29,21 @@ CSS 관리 : styled-components@6.1.17
    const { data, isLoading } = useQuery(["movies", "nowPlaying"], getMovies);
 
 -- 코드챌린지 목록
+<헤더>
+⭕ 헤더 카테고리 정리 - 배열을 통한 확장성 고려
+⭕ 헤더 카테고리별 api 분류 및 호출
+카테고리(now_playing, popular, top_rated, upcoming)
 
-1. 헤더 카테고리 정리 및 api 연동
+<슬라이더 부문>
+⭕ 양 끝 prev, next 버튼
+⭕ 슬라이더 타이틀 제작
+⭕ 슬라이더 타이틀 버튼 제작
+⭕ 슬라이더 카테고리 생성(최근 급상승, 유행하는 영화 이런 류)
+⭕ 슬라이더 방향 전환 시 고장(row에도 custom 전달)
 
-- api에서 카테고리별로 url 키워드보고 ${}로 가능하면 api 이름 바꿔서 모듈화하기
+<편의성 UI 부문>
+⭕ 우측 하단 고정 위치 top이상 버튼 / padding 때문에 최상단 이동 X
+⭕ 우측 하단 문의사항 문의 버튼 제작
 
-2. 컨텐츠 모달창 정보 추가 및 css
-3. 슬라이더 타이틀 + 슬라이더별 카테고리 별도 생성
-   (헤더와는 따로 // 헤더는 영화, tv 등이고 홈에서는 최근 급상승,, 요런 느낌 컨텐츠 노출하기)
-4. 오른쪽 아래 고정 위치로 해서 최상단으로 올라가기 + 문의사항 보내기 화면 추가하기
-   (이건 실제로 배포할 예정임)
+<컨텐츠 모달창 부문>
+⭕ 정보 추가 및 css

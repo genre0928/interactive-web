@@ -1,8 +1,8 @@
-import { useQuery } from "react-query";
-import { getMovies, IGetMoviesResult } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import Slider from "../Components/Slider";
+import { getMovies, IGetTvSerisResult } from "../api";
+import { useQuery } from "react-query";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -45,12 +45,13 @@ const SliderWrapper = styled.div`
   gap: 100px;
 `;
 
-function Home() {
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "upcoming"],
-    () => getMovies("movie", "upcoming", 1)
-  );
+function TvShows() {
+  
 
+  const { data, isLoading } = useQuery<IGetTvSerisResult>(
+    ["tv", "airing_today"],
+    () => getMovies("tv", "airing_today",1)
+  );
   return (
     <Wrapper>
       {isLoading ? (
@@ -58,12 +59,13 @@ function Home() {
       ) : (
         <>
           <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
-            <Title>{data?.results[0].title}</Title>
+            <Title>{data?.results[0].name}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <SliderWrapper>
-            <Slider series="movie" type="now_playing" sliderId="4"></Slider>
-            <Slider series="tv" type="on_the_air" sliderId="2"></Slider>
+            <Slider series="tv" type="airing_today" sliderId="1"></Slider>
+            <Slider series="tv" type="popular" sliderId="2"></Slider>
+            <Slider series="tv" type="top_rated" sliderId="3"></Slider>
           </SliderWrapper>
         </>
       )}
@@ -71,4 +73,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default TvShows;

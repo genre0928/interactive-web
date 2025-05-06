@@ -45,7 +45,7 @@ const SliderWrapper = styled.div`
   gap: 100px;
 `;
 
-function Home() {
+function Movies() {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "upcoming"],
     () => getMovies("movie", "upcoming", 1)
@@ -62,8 +62,9 @@ function Home() {
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <SliderWrapper>
-            <Slider series="movie" type="now_playing" sliderId="4"></Slider>
-            <Slider series="tv" type="on_the_air" sliderId="2"></Slider>
+            <Slider series="movie" type="upcoming" sliderId="1"></Slider>
+            <Slider series="movie" type="top_rated" sliderId="2"></Slider>
+            <Slider series="movie" type="popular" sliderId="3"></Slider>
           </SliderWrapper>
         </>
       )}
@@ -71,4 +72,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Movies;

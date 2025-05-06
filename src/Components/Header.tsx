@@ -1,9 +1,4 @@
-import {
-  motion,
-  progressPercentage,
-  useAnimation,
-  useScroll,
-} from "framer-motion";
+import { motion, useAnimation, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useMatch, useNavigate } from "react-router-dom";
@@ -12,6 +7,7 @@ import styled from "styled-components";
 const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
+  z-index: 1;
   align-items: center;
   position: fixed;
   width: 100%;
@@ -50,6 +46,8 @@ const Item = styled.li`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  font-size: 16px;
+  font-weight: bold;
   &:hover {
     color: ${(props) => props.theme.white.lighter};
   }
@@ -81,9 +79,10 @@ const Search = styled.form`
 const SearchInput = styled(motion.input)`
   transform-origin: right center;
   position: absolute;
+  width: 300px;
   right: 0px;
   padding: 5px 10px;
-  padding-left: 30px;
+  padding-left: 35px;
   z-index: -1;
   color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
@@ -120,10 +119,10 @@ interface IForm {
   keyword: string;
 }
 
+const categories = ["Home", "Movie", "Tv"];
+
 function Header() {
   const [searchOpen, setSearchOepn] = useState(false);
-  const homeMatch = useMatch("/");
-  const tvMatch = useMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useScroll();
@@ -150,7 +149,6 @@ function Header() {
   }, [scrollY, navAnimation]);
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = (data: IForm) => {
-    console.log(data);
     navigate(`/search?keyword=${data.keyword}`);
   };
 
@@ -171,25 +169,28 @@ function Header() {
           </Logo>
         </Link>
         <Items>
-          <Item>
-            <Link to="/">
-              Home
-              {homeMatch ? <Circle layoutId="circle" /> : null}
-            </Link>
-          </Item>
-          <Item>
-            <Link to="/tv">
-              Tv Shows
-              {tvMatch ? <Circle layoutId="circle" /> : null}
-            </Link>
-          </Item>
+          {categories.map((category) => {
+            const path =
+              category == "Home"
+                ? "/"
+                : category.replace(" ", "").toLowerCase();
+            const match = useMatch(path);
+            return (
+              <Item key={category}>
+                <Link to={path}>
+                  {category}
+                  {match ? <Circle layoutId="circle" /> : ""}
+                </Link>
+              </Item>
+            );
+          })}
         </Items>
       </Col>
       <Col>
         <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -210 : 0 }}
+            animate={{ x: searchOpen ? -270 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -202,6 +203,7 @@ function Header() {
             ></path>
           </motion.svg>
           <SearchInput
+            autoComplete="false"
             {...register("keyword", { required: true, minLength: 2 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}

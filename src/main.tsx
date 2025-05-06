@@ -73,6 +73,7 @@ a {
 ::-webkit-scrollbar {
   display: none;
 }
+
 `;
 
 const client = new QueryClient();

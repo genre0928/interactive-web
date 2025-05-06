@@ -1,49 +1,34 @@
-# Interactive-web 제작 연습
+# [Live]Interactive-web 제작 연습
+[라이브서버 주소](https://interactive-website-b0325.web.app/)<br/><br/>
+## 사용한 도구
+언어 : react@18.3.1 + typescript@5.7.3<br/>
+(framer motion 지원 문제로 react 다운그레이드)<br/>
+CSS 관리 : styled-components@6.1.17<br/>
+빌드 : vite@6.3.2<br/>
+경로 관리 : react-router-dom@7.5.1<br/>
+애니메이션 : framer-motion@12.8.0<br/>
+비동기 상태 관리 : react-query@3.39.3<br/>
+유효성 검사 : react-hook-form@7.56.1<br/>
+이메일 발송 라이브러리 : emailjs@4.0.3<br/>
+API : TMDB API<br/>
+배포 : firebase
 
-사용한 도구
-언어 : react@18.3.1 + typescript@5.7.3
-(framer motion 지원 문제로 react 다운그레이드)
-CSS 관리 : styled-components@6.1.17
-빌드 : vite@6.3.2
-경로 관리 : react-router-dom@7.5.1
-애니메이션 : framer-motion@12.8.0
-비동기 상태 관리 : react-query@3.39.3
-유효성 검사 : react-hook-form@7.56.1
-이메일 발송 라이브러리 : emailjs@4.0.3
+## 구현한 기능
+- 헤더
+  1. 헤더 카테고리 리팩토링<br/>
+  **목적 : 확장성 고려 하드코딩 대신 배열을 통한 관리 선택**<br/>
+  as-is : 카테고리별 하드코딩<br/>
+  to-be : categories 배열을 통해 관리<br/>
 
-1. 초기 세팅
+  2. 헤더 카테고리별 페이지 구현<br/>
 
-- 상태 관리 라이브러리(recoil)와 컴포넌트 추가 <RecoilRoot></RecoilRoot>
-- 전역 스타일 관리 <ThemeProvider theme={theme}></ThemeProvider>
-  styled.d.ts에 DefaultTheme 인터페이스의 타입 정의 및 export
-  theme.ts에 theme 정의 + 호출하여 사용할 요소 정리 / 인터페이스 DefaultTheme 타입을 따르도록 정의
-- CSS 초기화 컴포넌트 선언 <GlobalStyle />
+- 컨텐츠 슬라이더
+  1. prev, next 버튼 및 기능 구현<br/>
+  2. 슬라이더 타이틀 제작 및 빠른 이동 기능 구현<br/>
 
-- React Query 초기 세팅
+- UI & UX 개선
+  1. 최상단 이동 버튼 제작<br/>
+  2. 문의사항 문의 및 이메일 발송 기능 구현<br/>
 
-1. 전역 데이터 관리 객체 생성 const client = new QueryClient();
-2. <QueryClientProvider client={client}> 컴포넌트로 <App /> 컴포넌트 감싸기 + client props 전달
-3. 비동기 데이터 호출 함수 파일 생성 및 함수 생성
-   ex) api.ts
-4. 데이터를 활용할 컴포넌트에서 호출
-   const { data, isLoading } = useQuery(["movies", "nowPlaying"], getMovies);
-
--- 코드챌린지 목록
-<헤더>
-⭕ 헤더 카테고리 정리 - 배열을 통한 확장성 고려
-⭕ 헤더 카테고리별 api 분류 및 호출
-카테고리(now_playing, popular, top_rated, upcoming)
-
-<슬라이더 부문>
-⭕ 양 끝 prev, next 버튼
-⭕ 슬라이더 타이틀 제작
-⭕ 슬라이더 타이틀 버튼 제작
-⭕ 슬라이더 카테고리 생성(최근 급상승, 유행하는 영화 이런 류)
-⭕ 슬라이더 방향 전환 시 고장(row에도 custom 전달)
-
-<편의성 UI 부문>
-⭕ 우측 하단 고정 위치 top이상 버튼 / padding 때문에 최상단 이동 X
-⭕ 우측 하단 문의사항 문의 버튼 제작
-
-<컨텐츠 모달창 부문>
-⭕ 정보 추가 및 css
+- 컨텐츠 모달창
+  1. Rate 정보 추가 및 시각화<br/>
